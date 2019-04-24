@@ -1,0 +1,58 @@
+#!/usr/bin/env python
+# Copyright (C) 2009-2011 Kristian B. Oelgaard and Garth N. Wells.
+# Licensed under the GNU LGPL Version 3.
+ 
+from ufl import * 
+ 
+scheme = "default"
+degree = 3
+dx = Measure("dx")
+dx = dx(degree=degree, scheme=scheme)
+
+elementA = VectorElement("Lagrange", tetrahedron, 2)
+elementT = VectorElement("Quadrature", tetrahedron, degree, dim=36,
+                         quad_scheme=scheme)
+elementS = VectorElement("Quadrature", tetrahedron, degree, dim=6,
+                         quad_scheme=scheme)
+
+v = TestFunction(elementA)
+u = TrialFunction(elementA)
+f = Coefficient(elementA)
+t = Coefficient(elementT)
+s = Coefficient(elementS)
+v_eps = TestFunction(elementS)
+
+
+# eps_xx, eps_yy, eps_zz, gam_xy, gam_xz, gam_yz
+def eps(u):
+    return as_vector([u[i].dx(i) for i in range(3)] + [u[i].dx(j) + u[j].dx(i) for i, j in [(0, 1), (0, 2), (1, 2)]])
+
+def sigma(s):
+    return as_matrix([[s[0], s[3], s[4]], [s[3], s[1], s[5]], [s[4], s[5], s[2]]])
+
+def tangent(t):
+  return as_matrix([[t[i*6 + j] for j in range(6)] for i in range(6)])
+
+eps_form = inner(v_eps, eps(f)) / CellVolume(tetrahedron) * dx
+eps_ref_form = inner(v_eps, as_vector([1., 1., 1., 1., 1., 1.])) / CellVolume(tetrahedron) * dx
+
+a = inner(eps(v), dot(tangent(t), eps(u)) )*dx
+L = inner(grad(v), sigma(s))*dx - inner(v, f)*dx
+
+#ADDED BY SAM
+#v2 = TestFunction(elementS)
+#Strss = TrialFunction(elementS)
+#s2= Coefficient(elementS);
+#aStrss=inner(v2, Strss)*dx
+#L_Strss=inner(v2, s2)*dx
+
+elementS2 = TensorElement("Lagrange",tetrahedron, 3)
+Strss = TrialFunction(elementS2)
+vstrss = TestFunction(elementS2)
+fstrss = Coefficient(elementS2)
+s2= Coefficient(elementS);
+aStrss  = inner(vstrss, Strss)*dx
+L_Strss = inner(vstrss, sigma(s2))*dx - inner(vstrss, fstrss)*dx 
+
+
+forms = [eps_form, eps_ref_form, a, L, aStrss, L_Strss]
