@@ -40,19 +40,47 @@ a = inner(eps(v), dot(tangent(t), eps(u)) )*dx
 L = inner(grad(v), sigma(s))*dx - inner(v, f)*dx
 
 #ADDED BY SAM
-#v2 = TestFunction(elementS)
-#Strss = TrialFunction(elementS)
-#s2= Coefficient(elementS);
-#aStrss=inner(v2, Strss)*dx
-#L_Strss=inner(v2, s2)*dx
 
-elementS2 = TensorElement("Lagrange",tetrahedron, 3)
+#Stresses from main.cpp
+elementS2 = TensorElement(FiniteElement('Lagrange', tetrahedron, 1), shape=(3, 3), symmetry={})
 Strss = TrialFunction(elementS2)
 vstrss = TestFunction(elementS2)
 fstrss = Coefficient(elementS2)
-s2= Coefficient(elementS);
+s2= Coefficient(elementS)
 aStrss  = inner(vstrss, Strss)*dx
 L_Strss = inner(vstrss, sigma(s2))*dx - inner(vstrss, fstrss)*dx 
 
+#Total Strain from grad u
+elementS3 = VectorElement("Lagrange", tetrahedron, 1)
+#elementS4 = TensorElement("Lagrange", tetrahedron, 1, shape=(3, 3), symmetry={})
+Eps = TrialFunction(elementS2)
+vEps = TestFunction(elementS2)
+u2 = Coefficient(elementS3)
+fEps = Coefficient(elementS2)
+aEps = inner(vEps, Eps)*dx
+LEps = inner(vEps, 0.5*(grad(u2)+transpose(grad(u2))))*dx - inner(vEps, fEps)*dx
 
-forms = [eps_form, eps_ref_form, a, L, aStrss, L_Strss]
+#Plastic Strain from main.cpp
+Eps_p = TrialFunction(elementS2)
+vEps_p = TestFunction(elementS2)
+fEps_p = Coefficient(elementS2)
+eps_p= Coefficient(elementS)
+aEps_p  = inner(vEps, Eps_p)*dx
+LEps_p = inner(vEps_p, sigma(eps_p))*dx - inner(vEps_p, fEps_p)*dx 
+
+E = 200.0e9
+nu = 0.3
+
+mu = E / (2.0*(1.0 + nu))
+lmbda = E*nu / ((1.0 + nu)*(1.0 - 2.0*nu))
+
+def sigma2(v2):
+    return 2.0*mu*sym(grad(v2)) + lmbda*tr(sym(grad(v2)))*Identity(v2.geometric_dimension())
+
+#Stress from C:(eps-eps_p)
+Strss2 = TrialFunction(elementS2)
+aStrss2  = inner(vstrss, Strss2)*dx
+#eps2=0.5*(grad(u2)+transpose(grad(u2)))
+L_Strss2 = inner(vstrss, sigma2(u2)-sigma(eps_p))*dx - inner(vstrss, fstrss)*dx 
+
+forms = [eps_form, eps_ref_form, a, L, aStrss, L_Strss, aEps, LEps, aEps_p, LEps_p, aStrss2, L_Strss2]

@@ -176,11 +176,12 @@ int main()
   L->s = stress;
 
   //ADDED by SAM
-  auto V2 = std::make_shared<Plas3D::CoefficientSpace_s>(mesh);
-  auto V3 =std::make_shared<Plas3D::CoefficientSpace_fstrss>(mesh); //ADDED BY Q
-  auto strss =std::make_shared<Function>(V3);
-  auto aStrss =std::make_shared<Plas3D::Form_aStrss>(V3,V3);
-  auto LStrss = std::make_shared<Plas3D::Form_L_Strss>(V3);
+  //auto V2 = std::make_shared<Plas3D::CoefficientSpace_s>(mesh);
+  auto V2 =std::make_shared<Plas3D::CoefficientSpace_fstrss>(mesh); //ADDED BY Q
+  //auto V3 =std::make_shared<Plas3D::CoefficientSpace_s2>(mesh);
+  auto strss =std::make_shared<Function>(V2);
+  auto aStrss =std::make_shared<Plas3D::Form_aStrss>(V2,V2);
+  auto LStrss = std::make_shared<Plas3D::Form_L_Strss>(V2);
   LStrss->s2 =stress;
   //auto f2 = std::make_shared<Constant>(0.0, 0.0, 0.0, );
   std::vector<std::size_t> value_shape;
@@ -190,10 +191,37 @@ int main()
   for (int i=0; i<9; i++)
       values.push_back(0.0);
 
-  auto f2=std::make_shared<Constant>(value_shape, values);
-
-  LStrss->fstrss =f2 ;
+  auto f2=std::make_shared<Constant>(value_shape, values); //ADDED BY Q
+  LStrss->fstrss =f2 ; //ADDED BY Q
 //
+//ADDED BY SAM For Eps
+  auto V3= std::make_shared<Plas3D::CoefficientSpace_fEps>(mesh);
+  auto Eps= std::make_shared<Function>(V3);
+  auto aEps = std::make_shared<Plas3D::Form_aEps>(V3,V3);
+  auto LEps = std:: make_shared<Plas3D::Form_LEps>(V3);
+  LEps->u2=u;
+  auto fEps= std::make_shared<Constant>(value_shape, values);
+  LEps->fEps =fEps;
+//
+
+//ADDED BY SAM For Eps_p
+  auto V4= std::make_shared<Plas3D::CoefficientSpace_fEps_p>(mesh);
+  auto Eps_p= std::make_shared<Function>(V4);
+  auto aEps_p = std::make_shared<Plas3D::Form_aEps_p>(V4,V4);
+  auto LEps_p =std::make_shared<Plas3D::Form_LEps_p>(V4);
+  LEps_p->eps_p=constitutive_update->eps_p();
+  auto fEps_p= std::make_shared<Constant>(value_shape, values);
+  LEps_p->fEps_p =fEps_p;
+  //
+//ADDED BY SAM For stress2
+  auto V5= std::make_shared<Plas3D::CoefficientSpace_fstrss>(mesh);
+  auto strss2 =std::make_shared<Function>(V5);
+  auto aStrss2 =std::make_shared<Plas3D::Form_aStrss2>(V5, V5);
+  auto LStress2 = std::make_shared<Plas3D::Form_L_Strss2>(V5);
+  LStress2->u2 = u;
+  LStress2->eps_p=constitutive_update->eps_p();
+  LStress2->fstrss=f2;
+  //
 
   // Create PlasticityProblem
   auto nonlinear_problem
@@ -211,10 +239,14 @@ int main()
   File file1("output/disp.pvd");
   File file2("output/eq_plas_strain.pvd");
   File file3("output/stress.pvd");
+  //File file4("output/eps.pvd");
+  XDMFFile file4("output/eps.xdmf");
+  XDMFFile file5("output/eps_p.xdmf");
+  XDMFFile file6("output/stress2.xdmf");
 
   // Equivalent plastic strain for visualisation
   auto eps_eq = std::make_shared<MeshFunction<double>>(mesh, mesh->topology().dim());
-  auto eps = std::make_shared<MeshFunction<double>>(mesh, mesh->topology().dim());
+  //auto eps = std::make_shared<MeshFunction<double>>(mesh, mesh->topology().dim());
 
   // Load-disp info
   unsigned int step = 0;
@@ -238,14 +270,18 @@ int main()
     constitutive_update->update_history();
     //ADDED BY SAM
     dolfin::solve(*aStrss==*LStrss, *strss);
-
+    dolfin::solve(*aEps==*LEps, *Eps);
+    dolfin::solve(*aEps_p==*LEps_p, *Eps_p);
+    dolfin::solve(*aStrss2==*LStress2, *strss2);
     // Write output to files
     file1 << *u;
     constitutive_update->eps_p_eq()->compute_mean(eps_eq);
     file2 << *eps_eq;
     file3 << *strss;
-    cout<<*strss;
-    constitutive_update->eps_p();
+    file4.write(*Eps,t);
+    file5.write(*Eps_p,t);
+    file6.write(*strss2,t);
+    //constitutive_update->eps_p();
   /*  for (int i=0; i<constitutive_update->w_stress().size(); i++)
     {
         std::cout<<constitutive_update->w_stress()[i]<<"\n";

@@ -1028,130 +1028,6 @@ public:
 };
 
 
-class plas3d_finite_element_8: public ufc::finite_element
-{
-public:
-
-  plas3d_finite_element_8();
-
-  ~plas3d_finite_element_8() override;
-
-  const char * signature() const final override;
-
-  ufc::shape cell_shape() const final override;
-
-  std::size_t topological_dimension() const final override;
-
-  std::size_t geometric_dimension() const final override;
-
-  std::size_t space_dimension() const final override;
-
-  std::size_t value_rank() const final override;
-
-  std::size_t value_dimension(std::size_t i) const final override;
-
-  std::size_t value_size() const final override;
-
-  std::size_t reference_value_rank() const final override;
-
-  std::size_t reference_value_dimension(std::size_t i) const final override;
-
-  std::size_t reference_value_size() const final override;
-
-  std::size_t degree() const final override;
-
-  const char * family() const final override;
-
-  void evaluate_reference_basis(double * reference_values,
-                                std::size_t num_points,
-                                const double * X) const final override;
-
-  void evaluate_reference_basis_derivatives(double * reference_values,
-                                            std::size_t order,
-                                            std::size_t num_points,
-                                            const double * X) const final override;
-
-  void transform_reference_basis_derivatives(double * values,
-                                             std::size_t order,
-                                             std::size_t num_points,
-                                             const double * reference_values,
-                                             const double * X,
-                                             const double * J,
-                                             const double * detJ,
-                                             const double * K,
-                                             int cell_orientation) const final override;
-
-  void evaluate_basis(std::size_t i,
-                      double * values,
-                      const double * x,
-                      const double * coordinate_dofs,
-                      int cell_orientation,
-                      const ufc::coordinate_mapping * cm=nullptr
-                      ) const final override;
-
-  void evaluate_basis_all(double * values,
-                          const double * x,
-                          const double * coordinate_dofs,
-                          int cell_orientation,
-                          const ufc::coordinate_mapping * cm=nullptr
-                          ) const final override;
-
-  void evaluate_basis_derivatives(std::size_t i,
-                                  std::size_t n,
-                                  double * values,
-                                  const double * x,
-                                  const double * coordinate_dofs,
-                                  int cell_orientation,
-                                  const ufc::coordinate_mapping * cm=nullptr
-                                  ) const final override;
-
-  void evaluate_basis_derivatives_all(std::size_t n,
-                                      double * values,
-                                      const double * x,
-                                      const double * coordinate_dofs,
-                                      int cell_orientation,
-                                      const ufc::coordinate_mapping * cm=nullptr
-                                      ) const final override;
-
-  double evaluate_dof(std::size_t i,
-                      const ufc::function& f,
-                      const double * coordinate_dofs,
-                      int cell_orientation,
-                      const ufc::cell& c,
-                      const ufc::coordinate_mapping * cm=nullptr
-                      ) const final override;
-
-  void evaluate_dofs(double * values,
-                     const ufc::function& f,
-                     const double * coordinate_dofs,
-                     int cell_orientation,
-                     const ufc::cell& c,
-                     const ufc::coordinate_mapping * cm=nullptr
-                     ) const final override;
-
-  void interpolate_vertex_values(double * vertex_values,
-                                 const double * dof_values,
-                                 const double * coordinate_dofs,
-                                 int cell_orientation,
-                                 const ufc::coordinate_mapping * cm=nullptr
-                                 ) const final override;
-
-  void tabulate_dof_coordinates(double * dof_coordinates,
-                                const double * coordinate_dofs,
-                                const ufc::coordinate_mapping * cm=nullptr
-                                ) const final override;
-
-  void tabulate_reference_dof_coordinates(double * reference_dof_coordinates) const final override;
-
-  std::size_t num_sub_elements() const final override;
-
-  ufc::finite_element * create_sub_element(std::size_t i) const final override;
-
-  ufc::finite_element * create() const final override;
-
-};
-
-
 class plas3d_dofmap_0: public ufc::dofmap
 {
 public:
@@ -1560,57 +1436,6 @@ public:
 };
 
 
-class plas3d_dofmap_8: public ufc::dofmap
-{
-public:
-
-  plas3d_dofmap_8();
-
-  ~plas3d_dofmap_8() override;
-
-  const char * signature() const final override;
-
-  bool needs_mesh_entities(std::size_t d) const final override;
-
-  std::size_t topological_dimension() const final override;
-
-  std::size_t global_dimension(const std::vector<std::size_t>&
-                               num_global_entities) const final override;
-
-  std::size_t num_global_support_dofs() const final override;
-
-  std::size_t num_element_support_dofs() const final override;
-
-  std::size_t num_element_dofs() const final override;
-
-  std::size_t num_facet_dofs() const final override;
-
-  std::size_t num_entity_dofs(std::size_t d) const final override;
-
-  std::size_t num_entity_closure_dofs(std::size_t d) const final override;
-
-  void tabulate_dofs(std::size_t * dofs,
-                     const std::vector<std::size_t>& num_global_entities,
-                     const std::vector<std::vector<std::size_t>>& entity_indices) const final override;
-
-  void tabulate_facet_dofs(std::size_t * dofs,
-                           std::size_t facet) const final override;
-
-  void tabulate_entity_dofs(std::size_t * dofs,
-                            std::size_t d, std::size_t i) const final override;
-
-  void tabulate_entity_closure_dofs(std::size_t * dofs,
-                            std::size_t d, std::size_t i) const final override;
-
-  std::size_t num_sub_dofmaps() const final override;
-
-  ufc::dofmap * create_sub_dofmap(std::size_t i) const final override;
-
-  ufc::dofmap * create() const final override;
-
-};
-
-
 class plas3d_coordinate_mapping_6: public ufc::coordinate_mapping
 {
 public:
@@ -1771,6 +1596,114 @@ public:
   plas3d_cell_integral_5_otherwise();
 
   ~plas3d_cell_integral_5_otherwise() override;
+
+  const std::vector<bool> & enabled_coefficients() const final override;
+
+  void tabulate_tensor(double * A,
+                       const double * const * w,
+                       const double * coordinate_dofs,
+                       int cell_orientation) const final override;
+
+};
+
+
+class plas3d_cell_integral_6_otherwise: public ufc::cell_integral
+{
+public:
+
+  plas3d_cell_integral_6_otherwise();
+
+  ~plas3d_cell_integral_6_otherwise() override;
+
+  const std::vector<bool> & enabled_coefficients() const final override;
+
+  void tabulate_tensor(double * A,
+                       const double * const * w,
+                       const double * coordinate_dofs,
+                       int cell_orientation) const final override;
+
+};
+
+
+class plas3d_cell_integral_7_otherwise: public ufc::cell_integral
+{
+public:
+
+  plas3d_cell_integral_7_otherwise();
+
+  ~plas3d_cell_integral_7_otherwise() override;
+
+  const std::vector<bool> & enabled_coefficients() const final override;
+
+  void tabulate_tensor(double * A,
+                       const double * const * w,
+                       const double * coordinate_dofs,
+                       int cell_orientation) const final override;
+
+};
+
+
+class plas3d_cell_integral_8_otherwise: public ufc::cell_integral
+{
+public:
+
+  plas3d_cell_integral_8_otherwise();
+
+  ~plas3d_cell_integral_8_otherwise() override;
+
+  const std::vector<bool> & enabled_coefficients() const final override;
+
+  void tabulate_tensor(double * A,
+                       const double * const * w,
+                       const double * coordinate_dofs,
+                       int cell_orientation) const final override;
+
+};
+
+
+class plas3d_cell_integral_9_otherwise: public ufc::cell_integral
+{
+public:
+
+  plas3d_cell_integral_9_otherwise();
+
+  ~plas3d_cell_integral_9_otherwise() override;
+
+  const std::vector<bool> & enabled_coefficients() const final override;
+
+  void tabulate_tensor(double * A,
+                       const double * const * w,
+                       const double * coordinate_dofs,
+                       int cell_orientation) const final override;
+
+};
+
+
+class plas3d_cell_integral_10_otherwise: public ufc::cell_integral
+{
+public:
+
+  plas3d_cell_integral_10_otherwise();
+
+  ~plas3d_cell_integral_10_otherwise() override;
+
+  const std::vector<bool> & enabled_coefficients() const final override;
+
+  void tabulate_tensor(double * A,
+                       const double * const * w,
+                       const double * coordinate_dofs,
+                       int cell_orientation) const final override;
+
+};
+
+
+class plas3d_cell_integral_11_otherwise: public ufc::cell_integral
+{
+public:
+
+  plas3d_cell_integral_11_otherwise();
+
+  ~plas3d_cell_integral_11_otherwise() override;
 
   const std::vector<bool> & enabled_coefficients() const final override;
 
@@ -2339,6 +2272,564 @@ public:
 
 };
 
+
+class plas3d_form_6: public ufc::form
+{
+public:
+
+  plas3d_form_6();
+
+  ~plas3d_form_6() override;
+
+  const char * signature() const final override;
+
+  std::size_t rank() const final override;
+
+  std::size_t num_coefficients() const final override;
+
+  std::size_t original_coefficient_position(std::size_t i) const final override;
+
+  ufc::finite_element * create_coordinate_finite_element() const final override;
+
+  ufc::dofmap * create_coordinate_dofmap() const final override;
+
+  ufc::coordinate_mapping * create_coordinate_mapping() const final override;
+
+  ufc::finite_element * create_finite_element(std::size_t i) const final override;
+
+  ufc::dofmap * create_dofmap(std::size_t i) const final override;
+
+  std::size_t max_cell_subdomain_id() const final override;
+
+  std::size_t max_exterior_facet_subdomain_id() const final override;
+
+  std::size_t max_interior_facet_subdomain_id() const final override;
+
+  std::size_t max_vertex_subdomain_id() const final override;
+
+  std::size_t max_custom_subdomain_id() const final override;
+
+  std::size_t max_cutcell_subdomain_id() const final override;
+
+  std::size_t max_interface_subdomain_id() const final override;
+
+  std::size_t max_overlap_subdomain_id() const final override;
+
+  bool has_cell_integrals() const final override;
+
+  bool has_exterior_facet_integrals() const final override;
+
+  bool has_interior_facet_integrals() const final override;
+
+  bool has_vertex_integrals() const final override;
+
+  bool has_custom_integrals() const final override;
+
+  bool has_cutcell_integrals() const final override;
+
+  bool has_interface_integrals() const final override;
+
+  bool has_overlap_integrals() const final override;
+
+  ufc::cell_integral * create_cell_integral(std::size_t i) const final override;
+
+  ufc::exterior_facet_integral * create_exterior_facet_integral(std::size_t i) const final override;
+
+  ufc::interior_facet_integral * create_interior_facet_integral(std::size_t i) const final override;
+
+  ufc::vertex_integral * create_vertex_integral(std::size_t i) const final override;
+
+  ufc::custom_integral * create_custom_integral(std::size_t i) const final override;
+
+  ufc::cutcell_integral * create_cutcell_integral(std::size_t i) const final override;
+
+  ufc::interface_integral * create_interface_integral(std::size_t i) const final override;
+
+  ufc::overlap_integral * create_overlap_integral(std::size_t i) const final override;
+
+  ufc::cell_integral * create_default_cell_integral() const final override;
+
+  ufc::exterior_facet_integral * create_default_exterior_facet_integral() const final override;
+
+  ufc::interior_facet_integral * create_default_interior_facet_integral() const final override;
+
+  ufc::vertex_integral * create_default_vertex_integral() const final override;
+
+  ufc::custom_integral * create_default_custom_integral() const final override;
+
+  ufc::cutcell_integral * create_default_cutcell_integral() const final override;
+
+  ufc::interface_integral * create_default_interface_integral() const final override;
+
+  ufc::overlap_integral * create_default_overlap_integral() const final override;
+
+};
+
+
+class plas3d_form_7: public ufc::form
+{
+public:
+
+  plas3d_form_7();
+
+  ~plas3d_form_7() override;
+
+  const char * signature() const final override;
+
+  std::size_t rank() const final override;
+
+  std::size_t num_coefficients() const final override;
+
+  std::size_t original_coefficient_position(std::size_t i) const final override;
+
+  ufc::finite_element * create_coordinate_finite_element() const final override;
+
+  ufc::dofmap * create_coordinate_dofmap() const final override;
+
+  ufc::coordinate_mapping * create_coordinate_mapping() const final override;
+
+  ufc::finite_element * create_finite_element(std::size_t i) const final override;
+
+  ufc::dofmap * create_dofmap(std::size_t i) const final override;
+
+  std::size_t max_cell_subdomain_id() const final override;
+
+  std::size_t max_exterior_facet_subdomain_id() const final override;
+
+  std::size_t max_interior_facet_subdomain_id() const final override;
+
+  std::size_t max_vertex_subdomain_id() const final override;
+
+  std::size_t max_custom_subdomain_id() const final override;
+
+  std::size_t max_cutcell_subdomain_id() const final override;
+
+  std::size_t max_interface_subdomain_id() const final override;
+
+  std::size_t max_overlap_subdomain_id() const final override;
+
+  bool has_cell_integrals() const final override;
+
+  bool has_exterior_facet_integrals() const final override;
+
+  bool has_interior_facet_integrals() const final override;
+
+  bool has_vertex_integrals() const final override;
+
+  bool has_custom_integrals() const final override;
+
+  bool has_cutcell_integrals() const final override;
+
+  bool has_interface_integrals() const final override;
+
+  bool has_overlap_integrals() const final override;
+
+  ufc::cell_integral * create_cell_integral(std::size_t i) const final override;
+
+  ufc::exterior_facet_integral * create_exterior_facet_integral(std::size_t i) const final override;
+
+  ufc::interior_facet_integral * create_interior_facet_integral(std::size_t i) const final override;
+
+  ufc::vertex_integral * create_vertex_integral(std::size_t i) const final override;
+
+  ufc::custom_integral * create_custom_integral(std::size_t i) const final override;
+
+  ufc::cutcell_integral * create_cutcell_integral(std::size_t i) const final override;
+
+  ufc::interface_integral * create_interface_integral(std::size_t i) const final override;
+
+  ufc::overlap_integral * create_overlap_integral(std::size_t i) const final override;
+
+  ufc::cell_integral * create_default_cell_integral() const final override;
+
+  ufc::exterior_facet_integral * create_default_exterior_facet_integral() const final override;
+
+  ufc::interior_facet_integral * create_default_interior_facet_integral() const final override;
+
+  ufc::vertex_integral * create_default_vertex_integral() const final override;
+
+  ufc::custom_integral * create_default_custom_integral() const final override;
+
+  ufc::cutcell_integral * create_default_cutcell_integral() const final override;
+
+  ufc::interface_integral * create_default_interface_integral() const final override;
+
+  ufc::overlap_integral * create_default_overlap_integral() const final override;
+
+};
+
+
+class plas3d_form_8: public ufc::form
+{
+public:
+
+  plas3d_form_8();
+
+  ~plas3d_form_8() override;
+
+  const char * signature() const final override;
+
+  std::size_t rank() const final override;
+
+  std::size_t num_coefficients() const final override;
+
+  std::size_t original_coefficient_position(std::size_t i) const final override;
+
+  ufc::finite_element * create_coordinate_finite_element() const final override;
+
+  ufc::dofmap * create_coordinate_dofmap() const final override;
+
+  ufc::coordinate_mapping * create_coordinate_mapping() const final override;
+
+  ufc::finite_element * create_finite_element(std::size_t i) const final override;
+
+  ufc::dofmap * create_dofmap(std::size_t i) const final override;
+
+  std::size_t max_cell_subdomain_id() const final override;
+
+  std::size_t max_exterior_facet_subdomain_id() const final override;
+
+  std::size_t max_interior_facet_subdomain_id() const final override;
+
+  std::size_t max_vertex_subdomain_id() const final override;
+
+  std::size_t max_custom_subdomain_id() const final override;
+
+  std::size_t max_cutcell_subdomain_id() const final override;
+
+  std::size_t max_interface_subdomain_id() const final override;
+
+  std::size_t max_overlap_subdomain_id() const final override;
+
+  bool has_cell_integrals() const final override;
+
+  bool has_exterior_facet_integrals() const final override;
+
+  bool has_interior_facet_integrals() const final override;
+
+  bool has_vertex_integrals() const final override;
+
+  bool has_custom_integrals() const final override;
+
+  bool has_cutcell_integrals() const final override;
+
+  bool has_interface_integrals() const final override;
+
+  bool has_overlap_integrals() const final override;
+
+  ufc::cell_integral * create_cell_integral(std::size_t i) const final override;
+
+  ufc::exterior_facet_integral * create_exterior_facet_integral(std::size_t i) const final override;
+
+  ufc::interior_facet_integral * create_interior_facet_integral(std::size_t i) const final override;
+
+  ufc::vertex_integral * create_vertex_integral(std::size_t i) const final override;
+
+  ufc::custom_integral * create_custom_integral(std::size_t i) const final override;
+
+  ufc::cutcell_integral * create_cutcell_integral(std::size_t i) const final override;
+
+  ufc::interface_integral * create_interface_integral(std::size_t i) const final override;
+
+  ufc::overlap_integral * create_overlap_integral(std::size_t i) const final override;
+
+  ufc::cell_integral * create_default_cell_integral() const final override;
+
+  ufc::exterior_facet_integral * create_default_exterior_facet_integral() const final override;
+
+  ufc::interior_facet_integral * create_default_interior_facet_integral() const final override;
+
+  ufc::vertex_integral * create_default_vertex_integral() const final override;
+
+  ufc::custom_integral * create_default_custom_integral() const final override;
+
+  ufc::cutcell_integral * create_default_cutcell_integral() const final override;
+
+  ufc::interface_integral * create_default_interface_integral() const final override;
+
+  ufc::overlap_integral * create_default_overlap_integral() const final override;
+
+};
+
+
+class plas3d_form_9: public ufc::form
+{
+public:
+
+  plas3d_form_9();
+
+  ~plas3d_form_9() override;
+
+  const char * signature() const final override;
+
+  std::size_t rank() const final override;
+
+  std::size_t num_coefficients() const final override;
+
+  std::size_t original_coefficient_position(std::size_t i) const final override;
+
+  ufc::finite_element * create_coordinate_finite_element() const final override;
+
+  ufc::dofmap * create_coordinate_dofmap() const final override;
+
+  ufc::coordinate_mapping * create_coordinate_mapping() const final override;
+
+  ufc::finite_element * create_finite_element(std::size_t i) const final override;
+
+  ufc::dofmap * create_dofmap(std::size_t i) const final override;
+
+  std::size_t max_cell_subdomain_id() const final override;
+
+  std::size_t max_exterior_facet_subdomain_id() const final override;
+
+  std::size_t max_interior_facet_subdomain_id() const final override;
+
+  std::size_t max_vertex_subdomain_id() const final override;
+
+  std::size_t max_custom_subdomain_id() const final override;
+
+  std::size_t max_cutcell_subdomain_id() const final override;
+
+  std::size_t max_interface_subdomain_id() const final override;
+
+  std::size_t max_overlap_subdomain_id() const final override;
+
+  bool has_cell_integrals() const final override;
+
+  bool has_exterior_facet_integrals() const final override;
+
+  bool has_interior_facet_integrals() const final override;
+
+  bool has_vertex_integrals() const final override;
+
+  bool has_custom_integrals() const final override;
+
+  bool has_cutcell_integrals() const final override;
+
+  bool has_interface_integrals() const final override;
+
+  bool has_overlap_integrals() const final override;
+
+  ufc::cell_integral * create_cell_integral(std::size_t i) const final override;
+
+  ufc::exterior_facet_integral * create_exterior_facet_integral(std::size_t i) const final override;
+
+  ufc::interior_facet_integral * create_interior_facet_integral(std::size_t i) const final override;
+
+  ufc::vertex_integral * create_vertex_integral(std::size_t i) const final override;
+
+  ufc::custom_integral * create_custom_integral(std::size_t i) const final override;
+
+  ufc::cutcell_integral * create_cutcell_integral(std::size_t i) const final override;
+
+  ufc::interface_integral * create_interface_integral(std::size_t i) const final override;
+
+  ufc::overlap_integral * create_overlap_integral(std::size_t i) const final override;
+
+  ufc::cell_integral * create_default_cell_integral() const final override;
+
+  ufc::exterior_facet_integral * create_default_exterior_facet_integral() const final override;
+
+  ufc::interior_facet_integral * create_default_interior_facet_integral() const final override;
+
+  ufc::vertex_integral * create_default_vertex_integral() const final override;
+
+  ufc::custom_integral * create_default_custom_integral() const final override;
+
+  ufc::cutcell_integral * create_default_cutcell_integral() const final override;
+
+  ufc::interface_integral * create_default_interface_integral() const final override;
+
+  ufc::overlap_integral * create_default_overlap_integral() const final override;
+
+};
+
+
+class plas3d_form_10: public ufc::form
+{
+public:
+
+  plas3d_form_10();
+
+  ~plas3d_form_10() override;
+
+  const char * signature() const final override;
+
+  std::size_t rank() const final override;
+
+  std::size_t num_coefficients() const final override;
+
+  std::size_t original_coefficient_position(std::size_t i) const final override;
+
+  ufc::finite_element * create_coordinate_finite_element() const final override;
+
+  ufc::dofmap * create_coordinate_dofmap() const final override;
+
+  ufc::coordinate_mapping * create_coordinate_mapping() const final override;
+
+  ufc::finite_element * create_finite_element(std::size_t i) const final override;
+
+  ufc::dofmap * create_dofmap(std::size_t i) const final override;
+
+  std::size_t max_cell_subdomain_id() const final override;
+
+  std::size_t max_exterior_facet_subdomain_id() const final override;
+
+  std::size_t max_interior_facet_subdomain_id() const final override;
+
+  std::size_t max_vertex_subdomain_id() const final override;
+
+  std::size_t max_custom_subdomain_id() const final override;
+
+  std::size_t max_cutcell_subdomain_id() const final override;
+
+  std::size_t max_interface_subdomain_id() const final override;
+
+  std::size_t max_overlap_subdomain_id() const final override;
+
+  bool has_cell_integrals() const final override;
+
+  bool has_exterior_facet_integrals() const final override;
+
+  bool has_interior_facet_integrals() const final override;
+
+  bool has_vertex_integrals() const final override;
+
+  bool has_custom_integrals() const final override;
+
+  bool has_cutcell_integrals() const final override;
+
+  bool has_interface_integrals() const final override;
+
+  bool has_overlap_integrals() const final override;
+
+  ufc::cell_integral * create_cell_integral(std::size_t i) const final override;
+
+  ufc::exterior_facet_integral * create_exterior_facet_integral(std::size_t i) const final override;
+
+  ufc::interior_facet_integral * create_interior_facet_integral(std::size_t i) const final override;
+
+  ufc::vertex_integral * create_vertex_integral(std::size_t i) const final override;
+
+  ufc::custom_integral * create_custom_integral(std::size_t i) const final override;
+
+  ufc::cutcell_integral * create_cutcell_integral(std::size_t i) const final override;
+
+  ufc::interface_integral * create_interface_integral(std::size_t i) const final override;
+
+  ufc::overlap_integral * create_overlap_integral(std::size_t i) const final override;
+
+  ufc::cell_integral * create_default_cell_integral() const final override;
+
+  ufc::exterior_facet_integral * create_default_exterior_facet_integral() const final override;
+
+  ufc::interior_facet_integral * create_default_interior_facet_integral() const final override;
+
+  ufc::vertex_integral * create_default_vertex_integral() const final override;
+
+  ufc::custom_integral * create_default_custom_integral() const final override;
+
+  ufc::cutcell_integral * create_default_cutcell_integral() const final override;
+
+  ufc::interface_integral * create_default_interface_integral() const final override;
+
+  ufc::overlap_integral * create_default_overlap_integral() const final override;
+
+};
+
+
+class plas3d_form_11: public ufc::form
+{
+public:
+
+  plas3d_form_11();
+
+  ~plas3d_form_11() override;
+
+  const char * signature() const final override;
+
+  std::size_t rank() const final override;
+
+  std::size_t num_coefficients() const final override;
+
+  std::size_t original_coefficient_position(std::size_t i) const final override;
+
+  ufc::finite_element * create_coordinate_finite_element() const final override;
+
+  ufc::dofmap * create_coordinate_dofmap() const final override;
+
+  ufc::coordinate_mapping * create_coordinate_mapping() const final override;
+
+  ufc::finite_element * create_finite_element(std::size_t i) const final override;
+
+  ufc::dofmap * create_dofmap(std::size_t i) const final override;
+
+  std::size_t max_cell_subdomain_id() const final override;
+
+  std::size_t max_exterior_facet_subdomain_id() const final override;
+
+  std::size_t max_interior_facet_subdomain_id() const final override;
+
+  std::size_t max_vertex_subdomain_id() const final override;
+
+  std::size_t max_custom_subdomain_id() const final override;
+
+  std::size_t max_cutcell_subdomain_id() const final override;
+
+  std::size_t max_interface_subdomain_id() const final override;
+
+  std::size_t max_overlap_subdomain_id() const final override;
+
+  bool has_cell_integrals() const final override;
+
+  bool has_exterior_facet_integrals() const final override;
+
+  bool has_interior_facet_integrals() const final override;
+
+  bool has_vertex_integrals() const final override;
+
+  bool has_custom_integrals() const final override;
+
+  bool has_cutcell_integrals() const final override;
+
+  bool has_interface_integrals() const final override;
+
+  bool has_overlap_integrals() const final override;
+
+  ufc::cell_integral * create_cell_integral(std::size_t i) const final override;
+
+  ufc::exterior_facet_integral * create_exterior_facet_integral(std::size_t i) const final override;
+
+  ufc::interior_facet_integral * create_interior_facet_integral(std::size_t i) const final override;
+
+  ufc::vertex_integral * create_vertex_integral(std::size_t i) const final override;
+
+  ufc::custom_integral * create_custom_integral(std::size_t i) const final override;
+
+  ufc::cutcell_integral * create_cutcell_integral(std::size_t i) const final override;
+
+  ufc::interface_integral * create_interface_integral(std::size_t i) const final override;
+
+  ufc::overlap_integral * create_overlap_integral(std::size_t i) const final override;
+
+  ufc::cell_integral * create_default_cell_integral() const final override;
+
+  ufc::exterior_facet_integral * create_default_exterior_facet_integral() const final override;
+
+  ufc::interior_facet_integral * create_default_interior_facet_integral() const final override;
+
+  ufc::vertex_integral * create_default_vertex_integral() const final override;
+
+  ufc::custom_integral * create_default_custom_integral() const final override;
+
+  ufc::cutcell_integral * create_default_cutcell_integral() const final override;
+
+  ufc::interface_integral * create_default_interface_integral() const final override;
+
+  ufc::overlap_integral * create_default_overlap_integral() const final override;
+
+};
+
 // DOLFIN wrappers
 
 // Standard library includes
@@ -2364,6 +2855,30 @@ public:
 namespace Plas3D
 {
 
+class CoefficientSpace_eps_p: public dolfin::FunctionSpace
+{
+public:
+
+  // Constructor for standard function space
+  CoefficientSpace_eps_p(std::shared_ptr<const dolfin::Mesh> mesh):
+    dolfin::FunctionSpace(mesh,
+                          std::make_shared<const dolfin::FiniteElement>(std::make_shared<plas3d_finite_element_1>()),
+                          std::make_shared<const dolfin::DofMap>(std::make_shared<plas3d_dofmap_1>(), *mesh))
+  {
+    // Do nothing
+  }
+
+  // Constructor for constrained function space
+  CoefficientSpace_eps_p(std::shared_ptr<const dolfin::Mesh> mesh, std::shared_ptr<const dolfin::SubDomain> constrained_domain):
+    dolfin::FunctionSpace(mesh,
+                          std::make_shared<const dolfin::FiniteElement>(std::make_shared<plas3d_finite_element_1>()),
+                          std::make_shared<const dolfin::DofMap>(std::make_shared<plas3d_dofmap_1>(), *mesh, constrained_domain))
+  {
+    // Do nothing
+  }
+
+};
+
 class CoefficientSpace_f: public dolfin::FunctionSpace
 {
 public:
@@ -2388,6 +2903,54 @@ public:
 
 };
 
+class CoefficientSpace_fEps: public dolfin::FunctionSpace
+{
+public:
+
+  // Constructor for standard function space
+  CoefficientSpace_fEps(std::shared_ptr<const dolfin::Mesh> mesh):
+    dolfin::FunctionSpace(mesh,
+                          std::make_shared<const dolfin::FiniteElement>(std::make_shared<plas3d_finite_element_7>()),
+                          std::make_shared<const dolfin::DofMap>(std::make_shared<plas3d_dofmap_7>(), *mesh))
+  {
+    // Do nothing
+  }
+
+  // Constructor for constrained function space
+  CoefficientSpace_fEps(std::shared_ptr<const dolfin::Mesh> mesh, std::shared_ptr<const dolfin::SubDomain> constrained_domain):
+    dolfin::FunctionSpace(mesh,
+                          std::make_shared<const dolfin::FiniteElement>(std::make_shared<plas3d_finite_element_7>()),
+                          std::make_shared<const dolfin::DofMap>(std::make_shared<plas3d_dofmap_7>(), *mesh, constrained_domain))
+  {
+    // Do nothing
+  }
+
+};
+
+class CoefficientSpace_fEps_p: public dolfin::FunctionSpace
+{
+public:
+
+  // Constructor for standard function space
+  CoefficientSpace_fEps_p(std::shared_ptr<const dolfin::Mesh> mesh):
+    dolfin::FunctionSpace(mesh,
+                          std::make_shared<const dolfin::FiniteElement>(std::make_shared<plas3d_finite_element_7>()),
+                          std::make_shared<const dolfin::DofMap>(std::make_shared<plas3d_dofmap_7>(), *mesh))
+  {
+    // Do nothing
+  }
+
+  // Constructor for constrained function space
+  CoefficientSpace_fEps_p(std::shared_ptr<const dolfin::Mesh> mesh, std::shared_ptr<const dolfin::SubDomain> constrained_domain):
+    dolfin::FunctionSpace(mesh,
+                          std::make_shared<const dolfin::FiniteElement>(std::make_shared<plas3d_finite_element_7>()),
+                          std::make_shared<const dolfin::DofMap>(std::make_shared<plas3d_dofmap_7>(), *mesh, constrained_domain))
+  {
+    // Do nothing
+  }
+
+};
+
 class CoefficientSpace_fstrss: public dolfin::FunctionSpace
 {
 public:
@@ -2395,8 +2958,8 @@ public:
   // Constructor for standard function space
   CoefficientSpace_fstrss(std::shared_ptr<const dolfin::Mesh> mesh):
     dolfin::FunctionSpace(mesh,
-                          std::make_shared<const dolfin::FiniteElement>(std::make_shared<plas3d_finite_element_8>()),
-                          std::make_shared<const dolfin::DofMap>(std::make_shared<plas3d_dofmap_8>(), *mesh))
+                          std::make_shared<const dolfin::FiniteElement>(std::make_shared<plas3d_finite_element_7>()),
+                          std::make_shared<const dolfin::DofMap>(std::make_shared<plas3d_dofmap_7>(), *mesh))
   {
     // Do nothing
   }
@@ -2404,8 +2967,8 @@ public:
   // Constructor for constrained function space
   CoefficientSpace_fstrss(std::shared_ptr<const dolfin::Mesh> mesh, std::shared_ptr<const dolfin::SubDomain> constrained_domain):
     dolfin::FunctionSpace(mesh,
-                          std::make_shared<const dolfin::FiniteElement>(std::make_shared<plas3d_finite_element_8>()),
-                          std::make_shared<const dolfin::DofMap>(std::make_shared<plas3d_dofmap_8>(), *mesh, constrained_domain))
+                          std::make_shared<const dolfin::FiniteElement>(std::make_shared<plas3d_finite_element_7>()),
+                          std::make_shared<const dolfin::DofMap>(std::make_shared<plas3d_dofmap_7>(), *mesh, constrained_domain))
   {
     // Do nothing
   }
@@ -2478,6 +3041,30 @@ public:
     dolfin::FunctionSpace(mesh,
                           std::make_shared<const dolfin::FiniteElement>(std::make_shared<plas3d_finite_element_2>()),
                           std::make_shared<const dolfin::DofMap>(std::make_shared<plas3d_dofmap_2>(), *mesh, constrained_domain))
+  {
+    // Do nothing
+  }
+
+};
+
+class CoefficientSpace_u2: public dolfin::FunctionSpace
+{
+public:
+
+  // Constructor for standard function space
+  CoefficientSpace_u2(std::shared_ptr<const dolfin::Mesh> mesh):
+    dolfin::FunctionSpace(mesh,
+                          std::make_shared<const dolfin::FiniteElement>(std::make_shared<plas3d_finite_element_6>()),
+                          std::make_shared<const dolfin::DofMap>(std::make_shared<plas3d_dofmap_6>(), *mesh))
+  {
+    // Do nothing
+  }
+
+  // Constructor for constrained function space
+  CoefficientSpace_u2(std::shared_ptr<const dolfin::Mesh> mesh, std::shared_ptr<const dolfin::SubDomain> constrained_domain):
+    dolfin::FunctionSpace(mesh,
+                          std::make_shared<const dolfin::FiniteElement>(std::make_shared<plas3d_finite_element_6>()),
+                          std::make_shared<const dolfin::DofMap>(std::make_shared<plas3d_dofmap_6>(), *mesh, constrained_domain))
   {
     // Do nothing
   }
@@ -3278,8 +3865,8 @@ public:
   // Constructor for standard function space
   Form_aStrss_FunctionSpace_0(std::shared_ptr<const dolfin::Mesh> mesh):
     dolfin::FunctionSpace(mesh,
-                          std::make_shared<const dolfin::FiniteElement>(std::make_shared<plas3d_finite_element_8>()),
-                          std::make_shared<const dolfin::DofMap>(std::make_shared<plas3d_dofmap_8>(), *mesh))
+                          std::make_shared<const dolfin::FiniteElement>(std::make_shared<plas3d_finite_element_7>()),
+                          std::make_shared<const dolfin::DofMap>(std::make_shared<plas3d_dofmap_7>(), *mesh))
   {
     // Do nothing
   }
@@ -3287,8 +3874,8 @@ public:
   // Constructor for constrained function space
   Form_aStrss_FunctionSpace_0(std::shared_ptr<const dolfin::Mesh> mesh, std::shared_ptr<const dolfin::SubDomain> constrained_domain):
     dolfin::FunctionSpace(mesh,
-                          std::make_shared<const dolfin::FiniteElement>(std::make_shared<plas3d_finite_element_8>()),
-                          std::make_shared<const dolfin::DofMap>(std::make_shared<plas3d_dofmap_8>(), *mesh, constrained_domain))
+                          std::make_shared<const dolfin::FiniteElement>(std::make_shared<plas3d_finite_element_7>()),
+                          std::make_shared<const dolfin::DofMap>(std::make_shared<plas3d_dofmap_7>(), *mesh, constrained_domain))
   {
     // Do nothing
   }
@@ -3302,8 +3889,8 @@ public:
   // Constructor for standard function space
   Form_aStrss_FunctionSpace_1(std::shared_ptr<const dolfin::Mesh> mesh):
     dolfin::FunctionSpace(mesh,
-                          std::make_shared<const dolfin::FiniteElement>(std::make_shared<plas3d_finite_element_8>()),
-                          std::make_shared<const dolfin::DofMap>(std::make_shared<plas3d_dofmap_8>(), *mesh))
+                          std::make_shared<const dolfin::FiniteElement>(std::make_shared<plas3d_finite_element_7>()),
+                          std::make_shared<const dolfin::DofMap>(std::make_shared<plas3d_dofmap_7>(), *mesh))
   {
     // Do nothing
   }
@@ -3311,8 +3898,8 @@ public:
   // Constructor for constrained function space
   Form_aStrss_FunctionSpace_1(std::shared_ptr<const dolfin::Mesh> mesh, std::shared_ptr<const dolfin::SubDomain> constrained_domain):
     dolfin::FunctionSpace(mesh,
-                          std::make_shared<const dolfin::FiniteElement>(std::make_shared<plas3d_finite_element_8>()),
-                          std::make_shared<const dolfin::DofMap>(std::make_shared<plas3d_dofmap_8>(), *mesh, constrained_domain))
+                          std::make_shared<const dolfin::FiniteElement>(std::make_shared<plas3d_finite_element_7>()),
+                          std::make_shared<const dolfin::DofMap>(std::make_shared<plas3d_dofmap_7>(), *mesh, constrained_domain))
   {
     // Do nothing
   }
@@ -3469,8 +4056,8 @@ public:
   // Constructor for standard function space
   Form_L_Strss_FunctionSpace_0(std::shared_ptr<const dolfin::Mesh> mesh):
     dolfin::FunctionSpace(mesh,
-                          std::make_shared<const dolfin::FiniteElement>(std::make_shared<plas3d_finite_element_8>()),
-                          std::make_shared<const dolfin::DofMap>(std::make_shared<plas3d_dofmap_8>(), *mesh))
+                          std::make_shared<const dolfin::FiniteElement>(std::make_shared<plas3d_finite_element_7>()),
+                          std::make_shared<const dolfin::DofMap>(std::make_shared<plas3d_dofmap_7>(), *mesh))
   {
     // Do nothing
   }
@@ -3478,8 +4065,8 @@ public:
   // Constructor for constrained function space
   Form_L_Strss_FunctionSpace_0(std::shared_ptr<const dolfin::Mesh> mesh, std::shared_ptr<const dolfin::SubDomain> constrained_domain):
     dolfin::FunctionSpace(mesh,
-                          std::make_shared<const dolfin::FiniteElement>(std::make_shared<plas3d_finite_element_8>()),
-                          std::make_shared<const dolfin::DofMap>(std::make_shared<plas3d_dofmap_8>(), *mesh, constrained_domain))
+                          std::make_shared<const dolfin::FiniteElement>(std::make_shared<plas3d_finite_element_7>()),
+                          std::make_shared<const dolfin::DofMap>(std::make_shared<plas3d_dofmap_7>(), *mesh, constrained_domain))
   {
     // Do nothing
   }
@@ -3669,6 +4256,1222 @@ public:
   // Coefficients
   dolfin::MultiMeshCoefficientAssigner fstrss;
   dolfin::MultiMeshCoefficientAssigner s2;
+};
+
+class Form_aEps_FunctionSpace_0: public dolfin::FunctionSpace
+{
+public:
+
+  // Constructor for standard function space
+  Form_aEps_FunctionSpace_0(std::shared_ptr<const dolfin::Mesh> mesh):
+    dolfin::FunctionSpace(mesh,
+                          std::make_shared<const dolfin::FiniteElement>(std::make_shared<plas3d_finite_element_7>()),
+                          std::make_shared<const dolfin::DofMap>(std::make_shared<plas3d_dofmap_7>(), *mesh))
+  {
+    // Do nothing
+  }
+
+  // Constructor for constrained function space
+  Form_aEps_FunctionSpace_0(std::shared_ptr<const dolfin::Mesh> mesh, std::shared_ptr<const dolfin::SubDomain> constrained_domain):
+    dolfin::FunctionSpace(mesh,
+                          std::make_shared<const dolfin::FiniteElement>(std::make_shared<plas3d_finite_element_7>()),
+                          std::make_shared<const dolfin::DofMap>(std::make_shared<plas3d_dofmap_7>(), *mesh, constrained_domain))
+  {
+    // Do nothing
+  }
+
+};
+
+class Form_aEps_FunctionSpace_1: public dolfin::FunctionSpace
+{
+public:
+
+  // Constructor for standard function space
+  Form_aEps_FunctionSpace_1(std::shared_ptr<const dolfin::Mesh> mesh):
+    dolfin::FunctionSpace(mesh,
+                          std::make_shared<const dolfin::FiniteElement>(std::make_shared<plas3d_finite_element_7>()),
+                          std::make_shared<const dolfin::DofMap>(std::make_shared<plas3d_dofmap_7>(), *mesh))
+  {
+    // Do nothing
+  }
+
+  // Constructor for constrained function space
+  Form_aEps_FunctionSpace_1(std::shared_ptr<const dolfin::Mesh> mesh, std::shared_ptr<const dolfin::SubDomain> constrained_domain):
+    dolfin::FunctionSpace(mesh,
+                          std::make_shared<const dolfin::FiniteElement>(std::make_shared<plas3d_finite_element_7>()),
+                          std::make_shared<const dolfin::DofMap>(std::make_shared<plas3d_dofmap_7>(), *mesh, constrained_domain))
+  {
+    // Do nothing
+  }
+
+};
+
+class Form_aEps_MultiMeshFunctionSpace_0: public dolfin::MultiMeshFunctionSpace
+{
+public:
+
+  // Constructor for multimesh function space
+  Form_aEps_MultiMeshFunctionSpace_0(std::shared_ptr<const dolfin::MultiMesh> multimesh): dolfin::MultiMeshFunctionSpace(multimesh)
+  {
+    // Create and add standard function spaces
+    for (std::size_t part = 0; part < multimesh->num_parts(); part++)
+    {
+      std::shared_ptr<const dolfin::FunctionSpace> V(new Form_aEps_FunctionSpace_0(multimesh->part(part)));
+      add(V);
+    }
+
+    // Build multimesh function space
+    build();
+  }
+
+};
+
+class Form_aEps_MultiMeshFunctionSpace_1: public dolfin::MultiMeshFunctionSpace
+{
+public:
+
+  // Constructor for multimesh function space
+  Form_aEps_MultiMeshFunctionSpace_1(std::shared_ptr<const dolfin::MultiMesh> multimesh): dolfin::MultiMeshFunctionSpace(multimesh)
+  {
+    // Create and add standard function spaces
+    for (std::size_t part = 0; part < multimesh->num_parts(); part++)
+    {
+      std::shared_ptr<const dolfin::FunctionSpace> V(new Form_aEps_FunctionSpace_1(multimesh->part(part)));
+      add(V);
+    }
+
+    // Build multimesh function space
+    build();
+  }
+
+};
+
+class Form_aEps: public dolfin::Form
+{
+public:
+
+  // Constructor
+  Form_aEps(std::shared_ptr<const dolfin::FunctionSpace> V1, std::shared_ptr<const dolfin::FunctionSpace> V0):
+    dolfin::Form(2, 0)
+  {
+    _function_spaces[0] = V0;
+    _function_spaces[1] = V1;
+
+    _ufc_form = std::make_shared<const plas3d_form_6>();
+  }
+
+  // Destructor
+  ~Form_aEps()
+  {}
+
+  /// Return the number of the coefficient with this name
+  virtual std::size_t coefficient_number(const std::string& name) const
+  {
+
+    dolfin::dolfin_error("generated code for class Form",
+                         "access coefficient data",
+                         "There are no coefficients");
+    return 0;
+  }
+
+  /// Return the name of the coefficient with this number
+  virtual std::string coefficient_name(std::size_t i) const
+  {
+
+    dolfin::dolfin_error("generated code for class Form",
+                         "access coefficient data",
+                         "There are no coefficients");
+    return "unnamed";
+  }
+
+  // Typedefs
+  typedef Form_aEps_FunctionSpace_0 TestSpace;
+  typedef Form_aEps_FunctionSpace_1 TrialSpace;
+  typedef Form_aEps_MultiMeshFunctionSpace_0 MultiMeshTestSpace;
+  typedef Form_aEps_MultiMeshFunctionSpace_1 MultiMeshTrialSpace;
+
+  // Coefficients
+};
+
+class MultiMeshForm_aEps: public dolfin::MultiMeshForm
+{
+public:
+
+  // Constructor
+  MultiMeshForm_aEps(std::shared_ptr<const dolfin::MultiMeshFunctionSpace> V1, std::shared_ptr<const dolfin::MultiMeshFunctionSpace> V0):
+    dolfin::MultiMeshForm(V1, V0)
+  {
+    // Create and add standard forms
+    std::size_t num_parts = V0->num_parts(); // assume all equal and pick first
+    for (std::size_t part = 0; part < num_parts; part++)
+    {
+      std::shared_ptr<dolfin::Form> a(new Form_aEps(V1->part(part), V0->part(part)));
+    add(a);
+
+    }
+    // Build multimesh form
+    build();
+
+    /// Assign coefficients
+
+  }
+
+  // Destructor
+  ~MultiMeshForm_aEps()
+  {}
+
+  /// Return the number of the coefficient with this name
+  virtual std::size_t coefficient_number(const std::string& name) const
+  {
+
+    dolfin::dolfin_error("generated code for class Form",
+                         "access coefficient data",
+                         "There are no coefficients");
+    return 0;
+  }
+
+  /// Return the name of the coefficient with this number
+  virtual std::string coefficient_name(std::size_t i) const
+  {
+
+    dolfin::dolfin_error("generated code for class Form",
+                         "access coefficient data",
+                         "There are no coefficients");
+    return "unnamed";
+  }
+
+  // Typedefs
+  typedef Form_aEps_FunctionSpace_0 TestSpace;
+  typedef Form_aEps_FunctionSpace_1 TrialSpace;
+  typedef Form_aEps_MultiMeshFunctionSpace_0 MultiMeshTestSpace;
+  typedef Form_aEps_MultiMeshFunctionSpace_1 MultiMeshTrialSpace;
+
+  // Coefficients
+};
+
+class Form_LEps_FunctionSpace_0: public dolfin::FunctionSpace
+{
+public:
+
+  // Constructor for standard function space
+  Form_LEps_FunctionSpace_0(std::shared_ptr<const dolfin::Mesh> mesh):
+    dolfin::FunctionSpace(mesh,
+                          std::make_shared<const dolfin::FiniteElement>(std::make_shared<plas3d_finite_element_7>()),
+                          std::make_shared<const dolfin::DofMap>(std::make_shared<plas3d_dofmap_7>(), *mesh))
+  {
+    // Do nothing
+  }
+
+  // Constructor for constrained function space
+  Form_LEps_FunctionSpace_0(std::shared_ptr<const dolfin::Mesh> mesh, std::shared_ptr<const dolfin::SubDomain> constrained_domain):
+    dolfin::FunctionSpace(mesh,
+                          std::make_shared<const dolfin::FiniteElement>(std::make_shared<plas3d_finite_element_7>()),
+                          std::make_shared<const dolfin::DofMap>(std::make_shared<plas3d_dofmap_7>(), *mesh, constrained_domain))
+  {
+    // Do nothing
+  }
+
+};
+
+class Form_LEps_MultiMeshFunctionSpace_0: public dolfin::MultiMeshFunctionSpace
+{
+public:
+
+  // Constructor for multimesh function space
+  Form_LEps_MultiMeshFunctionSpace_0(std::shared_ptr<const dolfin::MultiMesh> multimesh): dolfin::MultiMeshFunctionSpace(multimesh)
+  {
+    // Create and add standard function spaces
+    for (std::size_t part = 0; part < multimesh->num_parts(); part++)
+    {
+      std::shared_ptr<const dolfin::FunctionSpace> V(new Form_LEps_FunctionSpace_0(multimesh->part(part)));
+      add(V);
+    }
+
+    // Build multimesh function space
+    build();
+  }
+
+};
+
+typedef CoefficientSpace_u2 Form_LEps_FunctionSpace_1;
+
+typedef CoefficientSpace_fEps Form_LEps_FunctionSpace_2;
+
+class Form_LEps: public dolfin::Form
+{
+public:
+
+  // Constructor
+  Form_LEps(std::shared_ptr<const dolfin::FunctionSpace> V0):
+    dolfin::Form(1, 2), u2(*this, 0), fEps(*this, 1)
+  {
+    _function_spaces[0] = V0;
+
+    _ufc_form = std::make_shared<const plas3d_form_7>();
+  }
+
+  // Constructor
+  Form_LEps(std::shared_ptr<const dolfin::FunctionSpace> V0, std::shared_ptr<const dolfin::GenericFunction> u2, std::shared_ptr<const dolfin::GenericFunction> fEps):
+    dolfin::Form(1, 2), u2(*this, 0), fEps(*this, 1)
+  {
+    _function_spaces[0] = V0;
+
+    this->u2 = u2;
+    this->fEps = fEps;
+
+    _ufc_form = std::make_shared<const plas3d_form_7>();
+  }
+
+  // Destructor
+  ~Form_LEps()
+  {}
+
+  /// Return the number of the coefficient with this name
+  virtual std::size_t coefficient_number(const std::string& name) const
+  {
+    if (name == "u2")
+      return 0;
+    else if (name == "fEps")
+      return 1;
+
+    dolfin::dolfin_error("generated code for class Form",
+                         "access coefficient data",
+                         "Invalid coefficient");
+    return 0;
+  }
+
+  /// Return the name of the coefficient with this number
+  virtual std::string coefficient_name(std::size_t i) const
+  {
+    switch (i)
+    {
+    case 0:
+      return "u2";
+    case 1:
+      return "fEps";
+    }
+
+    dolfin::dolfin_error("generated code for class Form",
+                         "access coefficient data",
+                         "Invalid coefficient");
+    return "unnamed";
+  }
+
+  // Typedefs
+  typedef Form_LEps_FunctionSpace_0 TestSpace;
+  typedef Form_LEps_MultiMeshFunctionSpace_0 MultiMeshTestSpace;
+  typedef Form_LEps_FunctionSpace_1 CoefficientSpace_u2;
+  typedef Form_LEps_FunctionSpace_2 CoefficientSpace_fEps;
+
+  // Coefficients
+  dolfin::CoefficientAssigner u2;
+  dolfin::CoefficientAssigner fEps;
+};
+
+class MultiMeshForm_LEps: public dolfin::MultiMeshForm
+{
+public:
+
+  // Constructor
+  MultiMeshForm_LEps(std::shared_ptr<const dolfin::MultiMeshFunctionSpace> V0):
+    dolfin::MultiMeshForm(V0), u2(*this, 0), fEps(*this, 1)
+  {
+    // Create and add standard forms
+    std::size_t num_parts = V0->num_parts(); // assume all equal and pick first
+    for (std::size_t part = 0; part < num_parts; part++)
+    {
+      std::shared_ptr<dolfin::Form> a(new Form_LEps(V0->part(part)));
+    add(a);
+
+    }
+    // Build multimesh form
+    build();
+
+    /// Assign coefficients
+
+  }
+
+  // Constructor
+  MultiMeshForm_LEps(std::shared_ptr<const dolfin::MultiMeshFunctionSpace> V0, std::shared_ptr<const dolfin::GenericFunction> u2, std::shared_ptr<const dolfin::GenericFunction> fEps):
+    dolfin::MultiMeshForm(V0), u2(*this, 0), fEps(*this, 1)
+  {
+    // Create and add standard forms
+    std::size_t num_parts = V0->num_parts(); // assume all equal and pick first
+    for (std::size_t part = 0; part < num_parts; part++)
+    {
+      std::shared_ptr<dolfin::Form> a(new Form_LEps(V0->part(part)));
+    add(a);
+
+    }
+    // Build multimesh form
+    build();
+
+    /// Assign coefficients
+    this->u2 = u2;
+    this->fEps = fEps;
+
+  }
+
+  // Destructor
+  ~MultiMeshForm_LEps()
+  {}
+
+  /// Return the number of the coefficient with this name
+  virtual std::size_t coefficient_number(const std::string& name) const
+  {
+    if (name == "u2")
+      return 0;
+    else if (name == "fEps")
+      return 1;
+
+    dolfin::dolfin_error("generated code for class Form",
+                         "access coefficient data",
+                         "Invalid coefficient");
+    return 0;
+  }
+
+  /// Return the name of the coefficient with this number
+  virtual std::string coefficient_name(std::size_t i) const
+  {
+    switch (i)
+    {
+    case 0:
+      return "u2";
+    case 1:
+      return "fEps";
+    }
+
+    dolfin::dolfin_error("generated code for class Form",
+                         "access coefficient data",
+                         "Invalid coefficient");
+    return "unnamed";
+  }
+
+  // Typedefs
+  typedef Form_LEps_FunctionSpace_0 TestSpace;
+  typedef Form_LEps_MultiMeshFunctionSpace_0 MultiMeshTestSpace;
+  typedef Form_LEps_FunctionSpace_1 CoefficientSpace_u2;
+  typedef Form_LEps_FunctionSpace_2 CoefficientSpace_fEps;
+
+  // Coefficients
+  dolfin::MultiMeshCoefficientAssigner u2;
+  dolfin::MultiMeshCoefficientAssigner fEps;
+};
+
+class Form_aEps_p_FunctionSpace_0: public dolfin::FunctionSpace
+{
+public:
+
+  // Constructor for standard function space
+  Form_aEps_p_FunctionSpace_0(std::shared_ptr<const dolfin::Mesh> mesh):
+    dolfin::FunctionSpace(mesh,
+                          std::make_shared<const dolfin::FiniteElement>(std::make_shared<plas3d_finite_element_7>()),
+                          std::make_shared<const dolfin::DofMap>(std::make_shared<plas3d_dofmap_7>(), *mesh))
+  {
+    // Do nothing
+  }
+
+  // Constructor for constrained function space
+  Form_aEps_p_FunctionSpace_0(std::shared_ptr<const dolfin::Mesh> mesh, std::shared_ptr<const dolfin::SubDomain> constrained_domain):
+    dolfin::FunctionSpace(mesh,
+                          std::make_shared<const dolfin::FiniteElement>(std::make_shared<plas3d_finite_element_7>()),
+                          std::make_shared<const dolfin::DofMap>(std::make_shared<plas3d_dofmap_7>(), *mesh, constrained_domain))
+  {
+    // Do nothing
+  }
+
+};
+
+class Form_aEps_p_FunctionSpace_1: public dolfin::FunctionSpace
+{
+public:
+
+  // Constructor for standard function space
+  Form_aEps_p_FunctionSpace_1(std::shared_ptr<const dolfin::Mesh> mesh):
+    dolfin::FunctionSpace(mesh,
+                          std::make_shared<const dolfin::FiniteElement>(std::make_shared<plas3d_finite_element_7>()),
+                          std::make_shared<const dolfin::DofMap>(std::make_shared<plas3d_dofmap_7>(), *mesh))
+  {
+    // Do nothing
+  }
+
+  // Constructor for constrained function space
+  Form_aEps_p_FunctionSpace_1(std::shared_ptr<const dolfin::Mesh> mesh, std::shared_ptr<const dolfin::SubDomain> constrained_domain):
+    dolfin::FunctionSpace(mesh,
+                          std::make_shared<const dolfin::FiniteElement>(std::make_shared<plas3d_finite_element_7>()),
+                          std::make_shared<const dolfin::DofMap>(std::make_shared<plas3d_dofmap_7>(), *mesh, constrained_domain))
+  {
+    // Do nothing
+  }
+
+};
+
+class Form_aEps_p_MultiMeshFunctionSpace_0: public dolfin::MultiMeshFunctionSpace
+{
+public:
+
+  // Constructor for multimesh function space
+  Form_aEps_p_MultiMeshFunctionSpace_0(std::shared_ptr<const dolfin::MultiMesh> multimesh): dolfin::MultiMeshFunctionSpace(multimesh)
+  {
+    // Create and add standard function spaces
+    for (std::size_t part = 0; part < multimesh->num_parts(); part++)
+    {
+      std::shared_ptr<const dolfin::FunctionSpace> V(new Form_aEps_p_FunctionSpace_0(multimesh->part(part)));
+      add(V);
+    }
+
+    // Build multimesh function space
+    build();
+  }
+
+};
+
+class Form_aEps_p_MultiMeshFunctionSpace_1: public dolfin::MultiMeshFunctionSpace
+{
+public:
+
+  // Constructor for multimesh function space
+  Form_aEps_p_MultiMeshFunctionSpace_1(std::shared_ptr<const dolfin::MultiMesh> multimesh): dolfin::MultiMeshFunctionSpace(multimesh)
+  {
+    // Create and add standard function spaces
+    for (std::size_t part = 0; part < multimesh->num_parts(); part++)
+    {
+      std::shared_ptr<const dolfin::FunctionSpace> V(new Form_aEps_p_FunctionSpace_1(multimesh->part(part)));
+      add(V);
+    }
+
+    // Build multimesh function space
+    build();
+  }
+
+};
+
+class Form_aEps_p: public dolfin::Form
+{
+public:
+
+  // Constructor
+  Form_aEps_p(std::shared_ptr<const dolfin::FunctionSpace> V1, std::shared_ptr<const dolfin::FunctionSpace> V0):
+    dolfin::Form(2, 0)
+  {
+    _function_spaces[0] = V0;
+    _function_spaces[1] = V1;
+
+    _ufc_form = std::make_shared<const plas3d_form_8>();
+  }
+
+  // Destructor
+  ~Form_aEps_p()
+  {}
+
+  /// Return the number of the coefficient with this name
+  virtual std::size_t coefficient_number(const std::string& name) const
+  {
+
+    dolfin::dolfin_error("generated code for class Form",
+                         "access coefficient data",
+                         "There are no coefficients");
+    return 0;
+  }
+
+  /// Return the name of the coefficient with this number
+  virtual std::string coefficient_name(std::size_t i) const
+  {
+
+    dolfin::dolfin_error("generated code for class Form",
+                         "access coefficient data",
+                         "There are no coefficients");
+    return "unnamed";
+  }
+
+  // Typedefs
+  typedef Form_aEps_p_FunctionSpace_0 TestSpace;
+  typedef Form_aEps_p_FunctionSpace_1 TrialSpace;
+  typedef Form_aEps_p_MultiMeshFunctionSpace_0 MultiMeshTestSpace;
+  typedef Form_aEps_p_MultiMeshFunctionSpace_1 MultiMeshTrialSpace;
+
+  // Coefficients
+};
+
+class MultiMeshForm_aEps_p: public dolfin::MultiMeshForm
+{
+public:
+
+  // Constructor
+  MultiMeshForm_aEps_p(std::shared_ptr<const dolfin::MultiMeshFunctionSpace> V1, std::shared_ptr<const dolfin::MultiMeshFunctionSpace> V0):
+    dolfin::MultiMeshForm(V1, V0)
+  {
+    // Create and add standard forms
+    std::size_t num_parts = V0->num_parts(); // assume all equal and pick first
+    for (std::size_t part = 0; part < num_parts; part++)
+    {
+      std::shared_ptr<dolfin::Form> a(new Form_aEps_p(V1->part(part), V0->part(part)));
+    add(a);
+
+    }
+    // Build multimesh form
+    build();
+
+    /// Assign coefficients
+
+  }
+
+  // Destructor
+  ~MultiMeshForm_aEps_p()
+  {}
+
+  /// Return the number of the coefficient with this name
+  virtual std::size_t coefficient_number(const std::string& name) const
+  {
+
+    dolfin::dolfin_error("generated code for class Form",
+                         "access coefficient data",
+                         "There are no coefficients");
+    return 0;
+  }
+
+  /// Return the name of the coefficient with this number
+  virtual std::string coefficient_name(std::size_t i) const
+  {
+
+    dolfin::dolfin_error("generated code for class Form",
+                         "access coefficient data",
+                         "There are no coefficients");
+    return "unnamed";
+  }
+
+  // Typedefs
+  typedef Form_aEps_p_FunctionSpace_0 TestSpace;
+  typedef Form_aEps_p_FunctionSpace_1 TrialSpace;
+  typedef Form_aEps_p_MultiMeshFunctionSpace_0 MultiMeshTestSpace;
+  typedef Form_aEps_p_MultiMeshFunctionSpace_1 MultiMeshTrialSpace;
+
+  // Coefficients
+};
+
+class Form_LEps_p_FunctionSpace_0: public dolfin::FunctionSpace
+{
+public:
+
+  // Constructor for standard function space
+  Form_LEps_p_FunctionSpace_0(std::shared_ptr<const dolfin::Mesh> mesh):
+    dolfin::FunctionSpace(mesh,
+                          std::make_shared<const dolfin::FiniteElement>(std::make_shared<plas3d_finite_element_7>()),
+                          std::make_shared<const dolfin::DofMap>(std::make_shared<plas3d_dofmap_7>(), *mesh))
+  {
+    // Do nothing
+  }
+
+  // Constructor for constrained function space
+  Form_LEps_p_FunctionSpace_0(std::shared_ptr<const dolfin::Mesh> mesh, std::shared_ptr<const dolfin::SubDomain> constrained_domain):
+    dolfin::FunctionSpace(mesh,
+                          std::make_shared<const dolfin::FiniteElement>(std::make_shared<plas3d_finite_element_7>()),
+                          std::make_shared<const dolfin::DofMap>(std::make_shared<plas3d_dofmap_7>(), *mesh, constrained_domain))
+  {
+    // Do nothing
+  }
+
+};
+
+class Form_LEps_p_MultiMeshFunctionSpace_0: public dolfin::MultiMeshFunctionSpace
+{
+public:
+
+  // Constructor for multimesh function space
+  Form_LEps_p_MultiMeshFunctionSpace_0(std::shared_ptr<const dolfin::MultiMesh> multimesh): dolfin::MultiMeshFunctionSpace(multimesh)
+  {
+    // Create and add standard function spaces
+    for (std::size_t part = 0; part < multimesh->num_parts(); part++)
+    {
+      std::shared_ptr<const dolfin::FunctionSpace> V(new Form_LEps_p_FunctionSpace_0(multimesh->part(part)));
+      add(V);
+    }
+
+    // Build multimesh function space
+    build();
+  }
+
+};
+
+typedef CoefficientSpace_fEps_p Form_LEps_p_FunctionSpace_1;
+
+typedef CoefficientSpace_eps_p Form_LEps_p_FunctionSpace_2;
+
+class Form_LEps_p: public dolfin::Form
+{
+public:
+
+  // Constructor
+  Form_LEps_p(std::shared_ptr<const dolfin::FunctionSpace> V0):
+    dolfin::Form(1, 2), fEps_p(*this, 0), eps_p(*this, 1)
+  {
+    _function_spaces[0] = V0;
+
+    _ufc_form = std::make_shared<const plas3d_form_9>();
+  }
+
+  // Constructor
+  Form_LEps_p(std::shared_ptr<const dolfin::FunctionSpace> V0, std::shared_ptr<const dolfin::GenericFunction> fEps_p, std::shared_ptr<const dolfin::GenericFunction> eps_p):
+    dolfin::Form(1, 2), fEps_p(*this, 0), eps_p(*this, 1)
+  {
+    _function_spaces[0] = V0;
+
+    this->fEps_p = fEps_p;
+    this->eps_p = eps_p;
+
+    _ufc_form = std::make_shared<const plas3d_form_9>();
+  }
+
+  // Destructor
+  ~Form_LEps_p()
+  {}
+
+  /// Return the number of the coefficient with this name
+  virtual std::size_t coefficient_number(const std::string& name) const
+  {
+    if (name == "fEps_p")
+      return 0;
+    else if (name == "eps_p")
+      return 1;
+
+    dolfin::dolfin_error("generated code for class Form",
+                         "access coefficient data",
+                         "Invalid coefficient");
+    return 0;
+  }
+
+  /// Return the name of the coefficient with this number
+  virtual std::string coefficient_name(std::size_t i) const
+  {
+    switch (i)
+    {
+    case 0:
+      return "fEps_p";
+    case 1:
+      return "eps_p";
+    }
+
+    dolfin::dolfin_error("generated code for class Form",
+                         "access coefficient data",
+                         "Invalid coefficient");
+    return "unnamed";
+  }
+
+  // Typedefs
+  typedef Form_LEps_p_FunctionSpace_0 TestSpace;
+  typedef Form_LEps_p_MultiMeshFunctionSpace_0 MultiMeshTestSpace;
+  typedef Form_LEps_p_FunctionSpace_1 CoefficientSpace_fEps_p;
+  typedef Form_LEps_p_FunctionSpace_2 CoefficientSpace_eps_p;
+
+  // Coefficients
+  dolfin::CoefficientAssigner fEps_p;
+  dolfin::CoefficientAssigner eps_p;
+};
+
+class MultiMeshForm_LEps_p: public dolfin::MultiMeshForm
+{
+public:
+
+  // Constructor
+  MultiMeshForm_LEps_p(std::shared_ptr<const dolfin::MultiMeshFunctionSpace> V0):
+    dolfin::MultiMeshForm(V0), fEps_p(*this, 0), eps_p(*this, 1)
+  {
+    // Create and add standard forms
+    std::size_t num_parts = V0->num_parts(); // assume all equal and pick first
+    for (std::size_t part = 0; part < num_parts; part++)
+    {
+      std::shared_ptr<dolfin::Form> a(new Form_LEps_p(V0->part(part)));
+    add(a);
+
+    }
+    // Build multimesh form
+    build();
+
+    /// Assign coefficients
+
+  }
+
+  // Constructor
+  MultiMeshForm_LEps_p(std::shared_ptr<const dolfin::MultiMeshFunctionSpace> V0, std::shared_ptr<const dolfin::GenericFunction> fEps_p, std::shared_ptr<const dolfin::GenericFunction> eps_p):
+    dolfin::MultiMeshForm(V0), fEps_p(*this, 0), eps_p(*this, 1)
+  {
+    // Create and add standard forms
+    std::size_t num_parts = V0->num_parts(); // assume all equal and pick first
+    for (std::size_t part = 0; part < num_parts; part++)
+    {
+      std::shared_ptr<dolfin::Form> a(new Form_LEps_p(V0->part(part)));
+    add(a);
+
+    }
+    // Build multimesh form
+    build();
+
+    /// Assign coefficients
+    this->fEps_p = fEps_p;
+    this->eps_p = eps_p;
+
+  }
+
+  // Destructor
+  ~MultiMeshForm_LEps_p()
+  {}
+
+  /// Return the number of the coefficient with this name
+  virtual std::size_t coefficient_number(const std::string& name) const
+  {
+    if (name == "fEps_p")
+      return 0;
+    else if (name == "eps_p")
+      return 1;
+
+    dolfin::dolfin_error("generated code for class Form",
+                         "access coefficient data",
+                         "Invalid coefficient");
+    return 0;
+  }
+
+  /// Return the name of the coefficient with this number
+  virtual std::string coefficient_name(std::size_t i) const
+  {
+    switch (i)
+    {
+    case 0:
+      return "fEps_p";
+    case 1:
+      return "eps_p";
+    }
+
+    dolfin::dolfin_error("generated code for class Form",
+                         "access coefficient data",
+                         "Invalid coefficient");
+    return "unnamed";
+  }
+
+  // Typedefs
+  typedef Form_LEps_p_FunctionSpace_0 TestSpace;
+  typedef Form_LEps_p_MultiMeshFunctionSpace_0 MultiMeshTestSpace;
+  typedef Form_LEps_p_FunctionSpace_1 CoefficientSpace_fEps_p;
+  typedef Form_LEps_p_FunctionSpace_2 CoefficientSpace_eps_p;
+
+  // Coefficients
+  dolfin::MultiMeshCoefficientAssigner fEps_p;
+  dolfin::MultiMeshCoefficientAssigner eps_p;
+};
+
+class Form_aStrss2_FunctionSpace_0: public dolfin::FunctionSpace
+{
+public:
+
+  // Constructor for standard function space
+  Form_aStrss2_FunctionSpace_0(std::shared_ptr<const dolfin::Mesh> mesh):
+    dolfin::FunctionSpace(mesh,
+                          std::make_shared<const dolfin::FiniteElement>(std::make_shared<plas3d_finite_element_7>()),
+                          std::make_shared<const dolfin::DofMap>(std::make_shared<plas3d_dofmap_7>(), *mesh))
+  {
+    // Do nothing
+  }
+
+  // Constructor for constrained function space
+  Form_aStrss2_FunctionSpace_0(std::shared_ptr<const dolfin::Mesh> mesh, std::shared_ptr<const dolfin::SubDomain> constrained_domain):
+    dolfin::FunctionSpace(mesh,
+                          std::make_shared<const dolfin::FiniteElement>(std::make_shared<plas3d_finite_element_7>()),
+                          std::make_shared<const dolfin::DofMap>(std::make_shared<plas3d_dofmap_7>(), *mesh, constrained_domain))
+  {
+    // Do nothing
+  }
+
+};
+
+class Form_aStrss2_FunctionSpace_1: public dolfin::FunctionSpace
+{
+public:
+
+  // Constructor for standard function space
+  Form_aStrss2_FunctionSpace_1(std::shared_ptr<const dolfin::Mesh> mesh):
+    dolfin::FunctionSpace(mesh,
+                          std::make_shared<const dolfin::FiniteElement>(std::make_shared<plas3d_finite_element_7>()),
+                          std::make_shared<const dolfin::DofMap>(std::make_shared<plas3d_dofmap_7>(), *mesh))
+  {
+    // Do nothing
+  }
+
+  // Constructor for constrained function space
+  Form_aStrss2_FunctionSpace_1(std::shared_ptr<const dolfin::Mesh> mesh, std::shared_ptr<const dolfin::SubDomain> constrained_domain):
+    dolfin::FunctionSpace(mesh,
+                          std::make_shared<const dolfin::FiniteElement>(std::make_shared<plas3d_finite_element_7>()),
+                          std::make_shared<const dolfin::DofMap>(std::make_shared<plas3d_dofmap_7>(), *mesh, constrained_domain))
+  {
+    // Do nothing
+  }
+
+};
+
+class Form_aStrss2_MultiMeshFunctionSpace_0: public dolfin::MultiMeshFunctionSpace
+{
+public:
+
+  // Constructor for multimesh function space
+  Form_aStrss2_MultiMeshFunctionSpace_0(std::shared_ptr<const dolfin::MultiMesh> multimesh): dolfin::MultiMeshFunctionSpace(multimesh)
+  {
+    // Create and add standard function spaces
+    for (std::size_t part = 0; part < multimesh->num_parts(); part++)
+    {
+      std::shared_ptr<const dolfin::FunctionSpace> V(new Form_aStrss2_FunctionSpace_0(multimesh->part(part)));
+      add(V);
+    }
+
+    // Build multimesh function space
+    build();
+  }
+
+};
+
+class Form_aStrss2_MultiMeshFunctionSpace_1: public dolfin::MultiMeshFunctionSpace
+{
+public:
+
+  // Constructor for multimesh function space
+  Form_aStrss2_MultiMeshFunctionSpace_1(std::shared_ptr<const dolfin::MultiMesh> multimesh): dolfin::MultiMeshFunctionSpace(multimesh)
+  {
+    // Create and add standard function spaces
+    for (std::size_t part = 0; part < multimesh->num_parts(); part++)
+    {
+      std::shared_ptr<const dolfin::FunctionSpace> V(new Form_aStrss2_FunctionSpace_1(multimesh->part(part)));
+      add(V);
+    }
+
+    // Build multimesh function space
+    build();
+  }
+
+};
+
+class Form_aStrss2: public dolfin::Form
+{
+public:
+
+  // Constructor
+  Form_aStrss2(std::shared_ptr<const dolfin::FunctionSpace> V1, std::shared_ptr<const dolfin::FunctionSpace> V0):
+    dolfin::Form(2, 0)
+  {
+    _function_spaces[0] = V0;
+    _function_spaces[1] = V1;
+
+    _ufc_form = std::make_shared<const plas3d_form_10>();
+  }
+
+  // Destructor
+  ~Form_aStrss2()
+  {}
+
+  /// Return the number of the coefficient with this name
+  virtual std::size_t coefficient_number(const std::string& name) const
+  {
+
+    dolfin::dolfin_error("generated code for class Form",
+                         "access coefficient data",
+                         "There are no coefficients");
+    return 0;
+  }
+
+  /// Return the name of the coefficient with this number
+  virtual std::string coefficient_name(std::size_t i) const
+  {
+
+    dolfin::dolfin_error("generated code for class Form",
+                         "access coefficient data",
+                         "There are no coefficients");
+    return "unnamed";
+  }
+
+  // Typedefs
+  typedef Form_aStrss2_FunctionSpace_0 TestSpace;
+  typedef Form_aStrss2_FunctionSpace_1 TrialSpace;
+  typedef Form_aStrss2_MultiMeshFunctionSpace_0 MultiMeshTestSpace;
+  typedef Form_aStrss2_MultiMeshFunctionSpace_1 MultiMeshTrialSpace;
+
+  // Coefficients
+};
+
+class MultiMeshForm_aStrss2: public dolfin::MultiMeshForm
+{
+public:
+
+  // Constructor
+  MultiMeshForm_aStrss2(std::shared_ptr<const dolfin::MultiMeshFunctionSpace> V1, std::shared_ptr<const dolfin::MultiMeshFunctionSpace> V0):
+    dolfin::MultiMeshForm(V1, V0)
+  {
+    // Create and add standard forms
+    std::size_t num_parts = V0->num_parts(); // assume all equal and pick first
+    for (std::size_t part = 0; part < num_parts; part++)
+    {
+      std::shared_ptr<dolfin::Form> a(new Form_aStrss2(V1->part(part), V0->part(part)));
+    add(a);
+
+    }
+    // Build multimesh form
+    build();
+
+    /// Assign coefficients
+
+  }
+
+  // Destructor
+  ~MultiMeshForm_aStrss2()
+  {}
+
+  /// Return the number of the coefficient with this name
+  virtual std::size_t coefficient_number(const std::string& name) const
+  {
+
+    dolfin::dolfin_error("generated code for class Form",
+                         "access coefficient data",
+                         "There are no coefficients");
+    return 0;
+  }
+
+  /// Return the name of the coefficient with this number
+  virtual std::string coefficient_name(std::size_t i) const
+  {
+
+    dolfin::dolfin_error("generated code for class Form",
+                         "access coefficient data",
+                         "There are no coefficients");
+    return "unnamed";
+  }
+
+  // Typedefs
+  typedef Form_aStrss2_FunctionSpace_0 TestSpace;
+  typedef Form_aStrss2_FunctionSpace_1 TrialSpace;
+  typedef Form_aStrss2_MultiMeshFunctionSpace_0 MultiMeshTestSpace;
+  typedef Form_aStrss2_MultiMeshFunctionSpace_1 MultiMeshTrialSpace;
+
+  // Coefficients
+};
+
+class Form_L_Strss2_FunctionSpace_0: public dolfin::FunctionSpace
+{
+public:
+
+  // Constructor for standard function space
+  Form_L_Strss2_FunctionSpace_0(std::shared_ptr<const dolfin::Mesh> mesh):
+    dolfin::FunctionSpace(mesh,
+                          std::make_shared<const dolfin::FiniteElement>(std::make_shared<plas3d_finite_element_7>()),
+                          std::make_shared<const dolfin::DofMap>(std::make_shared<plas3d_dofmap_7>(), *mesh))
+  {
+    // Do nothing
+  }
+
+  // Constructor for constrained function space
+  Form_L_Strss2_FunctionSpace_0(std::shared_ptr<const dolfin::Mesh> mesh, std::shared_ptr<const dolfin::SubDomain> constrained_domain):
+    dolfin::FunctionSpace(mesh,
+                          std::make_shared<const dolfin::FiniteElement>(std::make_shared<plas3d_finite_element_7>()),
+                          std::make_shared<const dolfin::DofMap>(std::make_shared<plas3d_dofmap_7>(), *mesh, constrained_domain))
+  {
+    // Do nothing
+  }
+
+};
+
+class Form_L_Strss2_MultiMeshFunctionSpace_0: public dolfin::MultiMeshFunctionSpace
+{
+public:
+
+  // Constructor for multimesh function space
+  Form_L_Strss2_MultiMeshFunctionSpace_0(std::shared_ptr<const dolfin::MultiMesh> multimesh): dolfin::MultiMeshFunctionSpace(multimesh)
+  {
+    // Create and add standard function spaces
+    for (std::size_t part = 0; part < multimesh->num_parts(); part++)
+    {
+      std::shared_ptr<const dolfin::FunctionSpace> V(new Form_L_Strss2_FunctionSpace_0(multimesh->part(part)));
+      add(V);
+    }
+
+    // Build multimesh function space
+    build();
+  }
+
+};
+
+typedef CoefficientSpace_fstrss Form_L_Strss2_FunctionSpace_1;
+
+typedef CoefficientSpace_u2 Form_L_Strss2_FunctionSpace_2;
+
+typedef CoefficientSpace_eps_p Form_L_Strss2_FunctionSpace_3;
+
+class Form_L_Strss2: public dolfin::Form
+{
+public:
+
+  // Constructor
+  Form_L_Strss2(std::shared_ptr<const dolfin::FunctionSpace> V0):
+    dolfin::Form(1, 3), fstrss(*this, 0), u2(*this, 1), eps_p(*this, 2)
+  {
+    _function_spaces[0] = V0;
+
+    _ufc_form = std::make_shared<const plas3d_form_11>();
+  }
+
+  // Constructor
+  Form_L_Strss2(std::shared_ptr<const dolfin::FunctionSpace> V0, std::shared_ptr<const dolfin::GenericFunction> fstrss, std::shared_ptr<const dolfin::GenericFunction> u2, std::shared_ptr<const dolfin::GenericFunction> eps_p):
+    dolfin::Form(1, 3), fstrss(*this, 0), u2(*this, 1), eps_p(*this, 2)
+  {
+    _function_spaces[0] = V0;
+
+    this->fstrss = fstrss;
+    this->u2 = u2;
+    this->eps_p = eps_p;
+
+    _ufc_form = std::make_shared<const plas3d_form_11>();
+  }
+
+  // Destructor
+  ~Form_L_Strss2()
+  {}
+
+  /// Return the number of the coefficient with this name
+  virtual std::size_t coefficient_number(const std::string& name) const
+  {
+    if (name == "fstrss")
+      return 0;
+    else if (name == "u2")
+      return 1;
+    else if (name == "eps_p")
+      return 2;
+
+    dolfin::dolfin_error("generated code for class Form",
+                         "access coefficient data",
+                         "Invalid coefficient");
+    return 0;
+  }
+
+  /// Return the name of the coefficient with this number
+  virtual std::string coefficient_name(std::size_t i) const
+  {
+    switch (i)
+    {
+    case 0:
+      return "fstrss";
+    case 1:
+      return "u2";
+    case 2:
+      return "eps_p";
+    }
+
+    dolfin::dolfin_error("generated code for class Form",
+                         "access coefficient data",
+                         "Invalid coefficient");
+    return "unnamed";
+  }
+
+  // Typedefs
+  typedef Form_L_Strss2_FunctionSpace_0 TestSpace;
+  typedef Form_L_Strss2_MultiMeshFunctionSpace_0 MultiMeshTestSpace;
+  typedef Form_L_Strss2_FunctionSpace_1 CoefficientSpace_fstrss;
+  typedef Form_L_Strss2_FunctionSpace_2 CoefficientSpace_u2;
+  typedef Form_L_Strss2_FunctionSpace_3 CoefficientSpace_eps_p;
+
+  // Coefficients
+  dolfin::CoefficientAssigner fstrss;
+  dolfin::CoefficientAssigner u2;
+  dolfin::CoefficientAssigner eps_p;
+};
+
+class MultiMeshForm_L_Strss2: public dolfin::MultiMeshForm
+{
+public:
+
+  // Constructor
+  MultiMeshForm_L_Strss2(std::shared_ptr<const dolfin::MultiMeshFunctionSpace> V0):
+    dolfin::MultiMeshForm(V0), fstrss(*this, 0), u2(*this, 1), eps_p(*this, 2)
+  {
+    // Create and add standard forms
+    std::size_t num_parts = V0->num_parts(); // assume all equal and pick first
+    for (std::size_t part = 0; part < num_parts; part++)
+    {
+      std::shared_ptr<dolfin::Form> a(new Form_L_Strss2(V0->part(part)));
+    add(a);
+
+    }
+    // Build multimesh form
+    build();
+
+    /// Assign coefficients
+
+  }
+
+  // Constructor
+  MultiMeshForm_L_Strss2(std::shared_ptr<const dolfin::MultiMeshFunctionSpace> V0, std::shared_ptr<const dolfin::GenericFunction> fstrss, std::shared_ptr<const dolfin::GenericFunction> u2, std::shared_ptr<const dolfin::GenericFunction> eps_p):
+    dolfin::MultiMeshForm(V0), fstrss(*this, 0), u2(*this, 1), eps_p(*this, 2)
+  {
+    // Create and add standard forms
+    std::size_t num_parts = V0->num_parts(); // assume all equal and pick first
+    for (std::size_t part = 0; part < num_parts; part++)
+    {
+      std::shared_ptr<dolfin::Form> a(new Form_L_Strss2(V0->part(part)));
+    add(a);
+
+    }
+    // Build multimesh form
+    build();
+
+    /// Assign coefficients
+    this->fstrss = fstrss;
+    this->u2 = u2;
+    this->eps_p = eps_p;
+
+  }
+
+  // Destructor
+  ~MultiMeshForm_L_Strss2()
+  {}
+
+  /// Return the number of the coefficient with this name
+  virtual std::size_t coefficient_number(const std::string& name) const
+  {
+    if (name == "fstrss")
+      return 0;
+    else if (name == "u2")
+      return 1;
+    else if (name == "eps_p")
+      return 2;
+
+    dolfin::dolfin_error("generated code for class Form",
+                         "access coefficient data",
+                         "Invalid coefficient");
+    return 0;
+  }
+
+  /// Return the name of the coefficient with this number
+  virtual std::string coefficient_name(std::size_t i) const
+  {
+    switch (i)
+    {
+    case 0:
+      return "fstrss";
+    case 1:
+      return "u2";
+    case 2:
+      return "eps_p";
+    }
+
+    dolfin::dolfin_error("generated code for class Form",
+                         "access coefficient data",
+                         "Invalid coefficient");
+    return "unnamed";
+  }
+
+  // Typedefs
+  typedef Form_L_Strss2_FunctionSpace_0 TestSpace;
+  typedef Form_L_Strss2_MultiMeshFunctionSpace_0 MultiMeshTestSpace;
+  typedef Form_L_Strss2_FunctionSpace_1 CoefficientSpace_fstrss;
+  typedef Form_L_Strss2_FunctionSpace_2 CoefficientSpace_u2;
+  typedef Form_L_Strss2_FunctionSpace_3 CoefficientSpace_eps_p;
+
+  // Coefficients
+  dolfin::MultiMeshCoefficientAssigner fstrss;
+  dolfin::MultiMeshCoefficientAssigner u2;
+  dolfin::MultiMeshCoefficientAssigner eps_p;
 };
 
 
